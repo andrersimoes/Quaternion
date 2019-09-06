@@ -1,5 +1,5 @@
-import Base.*, Base.^, Base.conj
 export norm, normalize
+import Base.*, Base.^, Base.conj, LinearAlgebra.adjoint
 
 """
     Quats.conj(q)
@@ -44,6 +44,7 @@ function normalize( q::Quat )
     ( n > 0 ) ?  Quat( q.w / n, q.x / n, q.y / n, q.z / n ) : q 
 end
 
+adjoint( q::Quat ) = conj( q )
 *( k::Int64, q::Quat ) = Quat( q.w*k, q.x*k, q.y*k, q.z*k )
 *( k::Float64, q::Quat ) = Quat( q.w*k, q.x*k, q.y*k, q.z*k )
 *( q::Quat, k::Int64 ) = Quat( q.w*k, q.x*k, q.y*k, q.z*k )
