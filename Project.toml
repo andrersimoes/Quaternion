@@ -2,3 +2,6 @@ name = "Quaternion"
 uuid = "c96ff8a6-d043-11e9-0b6e-9f05a6dd1a09"
 authors = ["André Rodrigues Simões"]
 version = "0.1.0"
+
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"

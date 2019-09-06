@@ -10,6 +10,8 @@ struct Quat
     z::Float64
 end
 
+Quat( a,b,c,d, w_pos::Symbol ) = (w_pos==:w_at_end) ? Quat(d,a,b,c) : Quat(a,b,c,d)
+
 """
     to_axis_angle(q)
 
