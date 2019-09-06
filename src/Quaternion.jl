@@ -1,7 +1,7 @@
 module Quaternion
 
 export Quat
-export to_axis_angle
+export to_axis_angle, to_axis_angled
 
 struct Quat
     w::Float64
@@ -32,6 +32,17 @@ function to_axis_angle( q::Quat )
     else
         [ 0, [0,0,0] ]
     end
+end
+
+"""
+    to_axis_angled(q)
+
+Extracts the rotation angle (given in degrees) and rotation vector from quaternion q
+"""
+function to_axis_angled( q::Quat )
+    r = to_axis_angle( q )
+    r[1] = r[1] * 180/pi
+    r
 end
 
 include( "quat_show.jl" )
