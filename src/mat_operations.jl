@@ -31,6 +31,14 @@ function from_dcm( c::Array{Float64,2} )
 
     w = 0.5 * sqrt( c[1,1] + c[2,2] + c[3,3] + 1 )
 
+    # quantas possibilidades de w ser 0 ?
+    # c[1,1] = 0 c[2,2] = 0 c[3,3] = -1
+    # c[1,1] = 0 c[2,2] = -1 c[3,3] = 0
+    # c[1,1] = -1  c[2,2] = 0 c[3,3] = 0
+    # ok c[1,1] = 1 c[2,2] = -1 c[3,3] = -1
+    # ok c[1,1] = -1 c[2,2] = 1 c[3,3] = -1
+    # ok c[1,1] = -1 c[2,2] = -1 c[3,3] = 1
+    
     if w != 0
         Quat( w,
          0.5 * sign( c[3,2] - c[2,3] ) * sqrt( +c[1,1] - c[2,2] - c[3,3] + 1 ),
@@ -44,6 +52,30 @@ function from_dcm( c::Array{Float64,2} )
             Quat( 0, 0, 1, 0 )
         elseif c[1,1] == c[2,2] == -1 && c[3,3] == 1
             Quat( 0, 0, 0, 1 )
+        elseif c[1,1] == -1 && c[2,2] == c[3,3] == 0
+            if c[2,3] == c[3,2] == 1
+                Quat( 0, 0, -sqrt(2)/2, -sqrt(2)/2 )
+            elseif c[2,3] == c[3,2] == -1
+                Quat( 0, 0, -sqrt(2)/2, sqrt(2)/2 )
+            else
+                throw( "error" )
+            end
+        elseif c[2,2] == -1 && c[1,1] == c[3,3] == 0
+            if c[1,3] == c[3,1] == -1
+                Quat( 0, -sqrt(2)/2, 0, -sqrt(2)/2 )
+            elseif c[1,3] == c[3,1] == -1
+                Quat( 0, sqrt(2)/2, 0, -sqrt(2)/2 )
+            else
+                throw( "error" )
+            end
+        elseif c[3,3] == -1 && c[1,1] == c[2,2] == 0
+            if c[1,2] == c[2,1] == 1
+                Quat( 0, sqrt(2)/2, 0, sqrt(2,2) )
+            elseif c[1,2] == c[2,1] == -1
+                Quat( 0, sqrt(2)/2, 0, -sqrt(2,2) )
+            else
+                throw( "error" )
+            end
         end
     end
 end

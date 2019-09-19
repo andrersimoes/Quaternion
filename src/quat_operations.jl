@@ -1,5 +1,6 @@
 export norm, normalize
-import Base.-, Base.*, Base.^, Base.conj, LinearAlgebra.adjoint
+import Base.-, Base.*, Base.^, Base.==, Base.!=, Base.conj, 
+    LinearAlgebra.adjoint
 
 """
     Quats.conj(q)
@@ -71,3 +72,20 @@ function ^( q::Quat, n::Int64 )
     end
     r
 end
+
+function ==(q1::Quat, q2::Quat )
+    if q1.w != q2.w || q1.x != q2.x || q1.y != q2.y || q1.z != q2.z
+        return false
+    else
+        return true
+    end
+end
+
+function !=(q1::Quat, q2::Quat )
+    if q1.w != q2.w || q1.x != q2.x || q1.y != q2.y || q1.z != q2.z
+        return true
+    else
+        return false
+    end
+end
+
