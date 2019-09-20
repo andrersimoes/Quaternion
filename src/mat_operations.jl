@@ -61,8 +61,8 @@ function from_dcm( c::Array{Float64,2} )
                 throw( "error" )
             end
         elseif c[2,2] == -1 && c[1,1] == c[3,3] == 0
-            if c[1,3] == c[3,1] == -1
-                Quat( 0, -sqrt(2)/2, 0, -sqrt(2)/2 )
+            if c[1,3] == c[3,1] == 1
+                Quat( 0, sqrt(2)/2, 0, sqrt(2)/2 )
             elseif c[1,3] == c[3,1] == -1
                 Quat( 0, sqrt(2)/2, 0, -sqrt(2)/2 )
             else
@@ -70,9 +70,9 @@ function from_dcm( c::Array{Float64,2} )
             end
         elseif c[3,3] == -1 && c[1,1] == c[2,2] == 0
             if c[1,2] == c[2,1] == 1
-                Quat( 0, sqrt(2)/2, 0, sqrt(2,2) )
+                Quat( 0, -sqrt(2)/2, -sqrt(2)/2, 0 )
             elseif c[1,2] == c[2,1] == -1
-                Quat( 0, sqrt(2)/2, 0, -sqrt(2,2) )
+                Quat( 0, sqrt(2)/2, -sqrt(2)/2, 0 )
             else
                 throw( "error" )
             end

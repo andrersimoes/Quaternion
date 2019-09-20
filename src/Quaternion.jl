@@ -58,7 +58,7 @@ q * qv * q', where qv is a pure imaginary quaternion representing the input
 vector.
 """
 function get_vector( q::Quat )
-    [ q.x q.y q.z ]
+    [ q.x; q.y ; q.z ]
 end
 
 include( "quat_show.jl" )
