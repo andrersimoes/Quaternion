@@ -1,4 +1,4 @@
-export dcm, from_dcm
+export dcm, from_dcm, rotate_vec
 
 """
     dcm( sys1, sys2 )
@@ -58,7 +58,7 @@ function from_dcm( c::Array{Float64,2} )
             elseif c[2,3] == c[3,2] == -1
                 Quat( 0, 0, -sqrt(2)/2, sqrt(2)/2 )
             else
-                throw( "error" )
+                throw( "from_dcm() - error 01 - unexpected dcm input ", c )
             end
         elseif c[2,2] == -1 && c[1,1] == c[3,3] == 0
             if c[1,3] == c[3,1] == 1
@@ -66,7 +66,7 @@ function from_dcm( c::Array{Float64,2} )
             elseif c[1,3] == c[3,1] == -1
                 Quat( 0, sqrt(2)/2, 0, -sqrt(2)/2 )
             else
-                throw( "error" )
+                throw( "from_dcm() - error 02 - unexpected dcm input ", c )
             end
         elseif c[3,3] == -1 && c[1,1] == c[2,2] == 0
             if c[1,2] == c[2,1] == 1
@@ -74,8 +74,12 @@ function from_dcm( c::Array{Float64,2} )
             elseif c[1,2] == c[2,1] == -1
                 Quat( 0, sqrt(2)/2, -sqrt(2)/2, 0 )
             else
-                throw( "error" )
+                throw( "from_dcm() - error 03 - unexpected dcm input ", c )
             end
         end
     end
+end
+
+function rotate_vec( q::Quat, v::Array{Float64,1} )
+    return get_vector( q * Quat( 0, v[1], v[2], v[3] ) * q' )
 end
